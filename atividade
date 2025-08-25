@@ -1,0 +1,25 @@
+import tkinter as tk
+from tkinter import messagebox
+
+def verificar_idade():
+    try:
+        idade = int(entry_idade.get())  # pega o valor digitado e converte em inteiro
+        if idade >= 18:
+            messagebox.showinfo("Resultado", "Você é maior de idade!")
+        else:
+            messagebox.showwarning("Resultado", "Você é menor de idade!")
+    except ValueError:
+        messagebox.showerror("Erro", "Por favor, digite um número válido.")
+
+# Janela principal
+root = tk.Tk()
+root.title("Verificação de Idade")
+root.geometry("500x200")
+
+tk.Label(root, text="Digite sua idade:").pack(pady=5)
+entry_idade = tk.Entry(root)
+entry_idade.pack(pady=5)
+
+tk.Button(root, text="Verificar", command=verificar_idade).pack(pady=10)
+
+root.mainloop()
