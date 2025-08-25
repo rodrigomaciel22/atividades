@@ -1,0 +1,30 @@
+import tkinter as tk
+from tkinter import messagebox
+
+def verificar_nota():
+    try:
+        nota = float(entry_nota.get())
+        if nota >= 7:
+            messagebox.showinfo("Resultado", "Aprovado")
+        elif 5 <= nota < 7:
+            messagebox.showinfo("Resultado", "Recuperação")
+        elif nota < 5:
+            messagebox.showinfo("Resultado", "Reprovado")
+        else:
+            messagebox.showerror("Erro", "Nota deve estar entre 0 e 10")
+    except ValueError:
+        messagebox.showerror("Erro", "Por favor, insira uma nota válida")
+
+root = tk.Tk()
+root.title("Resultado Escolar")
+
+label_nota = tk.Label(root, text="Digite a nota final (0 a 10):")
+label_nota.pack(pady=10)
+
+entry_nota = tk.Entry(root)
+entry_nota.pack(pady=5)
+
+button_verificar = tk.Button(root, text="Verificar", command=verificar_nota)
+button_verificar.pack(pady=10)
+
+root.mainloop()
