@@ -1,0 +1,35 @@
+aba5 = tk.Frame(notebook)
+notebook.add(aba5, text="5 Segunda Tela")
+criar_botao(aba5, "Abrir Segunda Tela", abrir_segunda_tela)
+
+
+aba6 = tk.Frame(notebook)
+notebook.add(aba6, text="6 Formulário Nome")
+criar_label(aba6, "Digite seu nome:")
+tk.Entry(aba6).pack(pady=5)
+
+
+aba7 = tk.Frame(notebook)
+notebook.add(aba7, text="7 Calculadora Botões")
+btn_somar = tk.Button(aba7, text="Somar")
+btn_somar.grid(row=0, column=0, padx=20, pady=20)
+btn_subtrair = tk.Button(aba7, text="Subtrair")
+btn_subtrair.grid(row=0, column=1, padx=20, pady=20)
+
+
+aba8 = tk.Frame(notebook)
+notebook.add(aba8, text="8 Aviso")
+criar_label(aba8, "Atenção!", font=("Arial", 24), fg="red")
+
+
+aba9 = tk.Frame(notebook)
+notebook.add(aba9, text="9 Janela Amigável")
+criar_label(aba9, "Esta janela teria 400x300 e título personalizado.")
+
+
+aba10 = tk.Frame(notebook)
+notebook.add(aba10, text="10 Botão Sair")
+criar_botao(aba10, "Sair", janela.destroy)
+
+
+janela.mainloop()
