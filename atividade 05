@@ -1,0 +1,30 @@
+import tkinter as tk
+from tkinter import messagebox
+
+def mostrar_preco():
+    try:
+        opcao = int(entry_opcao.get())
+        if opcao == 1:
+            messagebox.showinfo("Cardápio", "Pizza – R$ 30,00")
+        elif opcao == 2:
+            messagebox.showinfo("Cardápio", "Hambúrguer – R$ 20,00")
+        elif opcao == 3:
+            messagebox.showinfo("Cardápio", "Refrigerante – R$ 5,00")
+        else:
+            messagebox.showinfo("Cardápio", "Opção inválida")
+    except ValueError:
+        messagebox.showerror("Erro", "Por favor, insira uma opção válida (1, 2 ou 3)")
+
+root = tk.Tk()
+root.title("Cardápio Interativo")
+
+label_cardapio = tk.Label(root, text="Cardápio:\n1 - Pizza – R$ 30,00\n2 - Hambúrguer – R$ 20,00\n3 - Refrigerante – R$ 5,00\n\nDigite uma opção (1, 2 ou 3):")
+label_cardapio.pack(pady=10)
+
+entry_opcao = tk.Entry(root)
+entry_opcao.pack(pady=5)
+
+button_mostrar = tk.Button(root, text="Mostrar", command=mostrar_preco)
+button_mostrar.pack(pady=10)
+
+root.mainloop()
