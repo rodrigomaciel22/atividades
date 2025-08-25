@@ -1,0 +1,23 @@
+import tkinter as tk
+from tkinter import messagebox
+
+def verificar_senha():
+    senha = entry_senha.get()
+    if senha == "1234":
+        messagebox.showinfo("Resultado", "Acesso permitido")
+    else:
+        messagebox.showinfo("Resultado", "Acesso negado")
+
+root = tk.Tk()
+root.title("Sistema de Senha")
+
+label_senha = tk.Label(root, text="Digite a senha:")
+label_senha.pack(pady=10)
+
+entry_senha = tk.Entry(root, show="*")
+entry_senha.pack(pady=5)
+
+button_verificar = tk.Button(root, text="Verificar", command=verificar_senha)
+button_verificar.pack(pady=10)
+
+root.mainloop()
