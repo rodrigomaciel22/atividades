@@ -1,0 +1,28 @@
+class Produto:
+    def __init__(self, nome, preco):
+        self.nome = nome
+        self.preco = preco
+
+class Pedido:
+    def __init__(self):
+        self.itens = []
+
+    def adicionar_produto(self, produto, quantidade):
+        self.itens.append((produto, quantidade))
+        print(f"{quantidade} unidades de {produto.nome} adicionadas ao pedido.")
+
+    def calcular_total(self):
+        total = sum(produto.preco * qtd for produto, qtd in self.itens)
+        print(f"Total do pedido: R$ {total:.2f}")
+        return total
+
+# Teste
+prod1 = Produto("Camisa", 50.0)
+prod2 = Produto("Calça", 80.0)
+prod3 = Produto("Tênis", 120.0)
+
+pedido = Pedido()
+pedido.adicionar_produto(prod1, 2)
+pedido.adicionar_produto(prod2, 1)
+pedido.adicionar_produto(prod3, 1)
+pedido.calcular_total()
