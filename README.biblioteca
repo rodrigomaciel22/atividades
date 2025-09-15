@@ -1,0 +1,29 @@
+class Livro:
+    def __init__(self, titulo, autor):
+        self.titulo = titulo
+        self.autor = autor
+        self.status = "disponivel"
+
+    def emprestar(self):
+        if self.status == "disponivel":
+            self.status = "emprestado"
+            print(f"{self.titulo} foi emprestado.")
+        else:
+            print(f"{self.titulo} já está emprestado.")
+
+    def devolver(self):
+        if self.status == "emprestado":
+            self.status = "disponivel"
+            print(f"{self.titulo} foi devolvido.")
+        else:
+            print(f"{self.titulo} já está disponível.")
+
+# Teste
+livro1 = Livro("Python Básico", "João Silva")
+livro2 = Livro("Java Avançado", "Maria Santos")
+print(f"Livro 1: {livro1.titulo} - Status: {livro1.status}")
+print(f"Livro 2: {livro2.titulo} - Status: {livro2.status}")
+livro1.emprestar()
+print(f"Status após empréstimo: {livro1.status}")
+livro1.devolver()
+print(f"Status após devolução: {livro1.status}")
