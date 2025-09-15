@@ -1,0 +1,40 @@
+class ContaBancaria:
+    def __init__(self, numero, titular):
+        self.numero = numero
+        self.titular = titular
+        self.saldo = 0.0
+
+    def depositar(self, valor):
+        self.saldo += valor
+        print(f"Depósito de R$ {valor:.2f} realizado. Saldo: R$ {self.saldo:.2f}")
+
+    def sacar(self, valor):
+        if valor <= self.saldo:
+            self.saldo -= valor
+            print(f"Saque de R$ {valor:.2f} realizado. Saldo: R$ {self.saldo:.2f}")
+        else:
+            print("Saldo insuficiente.")
+
+    def mostrar_saldo(self):
+        print(f"Saldo da conta {self.numero} ({self.titular}): R$ {self.saldo:.2f}")
+
+    def transferir(self, outra_conta, valor):
+        if valor <= self.saldo:
+            self.sacar(valor)
+            outra_conta.depositar(valor)
+            print(f"Transferência de R$ {valor:.2f} de {self.titular} para {outra_conta.titular} realizada.")
+        else:
+            print("Saldo insuficiente para transferência.")
+
+# Teste
+conta1 = ContaBancaria("001", "Alice")
+conta2 = ContaBancaria("002", "Bob")
+
+conta1.depositar(1000.0)
+conta1.mostrar_saldo()
+conta2.depositar(500.0)
+conta2.mostrar_saldo()
+
+conta1.transferir(conta2, 200.0)
+conta1.mostrar_saldo()
+conta2.mostrar_saldo()
