@@ -1,0 +1,33 @@
+class Aluno:
+    def __init__(self, nome, curso):
+        self.nome = nome
+        self.curso = curso
+        self.notas = []
+
+    def adicionar_nota(self, nota):
+        self.notas.append(nota)
+        print(f"Nota {nota} adicionada para {self.nome}.")
+
+    def calcular_media(self):
+        if self.notas:
+            media = sum(self.notas) / len(self.notas)
+            print(f"Média de {self.nome}: {media:.2f}")
+            return media
+        else:
+            print(f"{self.nome} não tem notas.")
+            return 0
+        
+    def mostrar_info(self):
+        print(f"Aluno: {self.nome} - curso: {self.curso} - Média: {self.calcular_media():.2f}")
+
+# Teste
+aluno1 = Aluno("Ana", "Engenharia")
+aluno1.adicionar_nota(8.5)
+aluno1.adicionar_nota(7.0)
+aluno1.mostrar_info()
+
+aluno2 = Aluno("Pedro", "Medicina")
+aluno2.adicionar_nota(9.0)
+aluno2.adicionar_nota(10.0)
+aluno2.adicionar_nota(8.0)
+aluno2.mostrar_info()
