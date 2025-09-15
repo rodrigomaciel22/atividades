@@ -1,0 +1,145 @@
+import customtkinter as ctk
+from tkinter import messagebox
+import tkinter as tk
+
+ctk.set_appearance_mode("dark") 
+ctk.set_default_color_theme("blue")  
+
+class Livro:
+    def __init__(self, titulo, autor):
+        self.titulo = titulo
+        self.autor = autor
+        self.status = "disponível"
+
+    def emprestar(self):
+        if self.status == "disponível":
+            self.status = "emprestado"
+            return True
+        return False
+
+    def devolver(self):
+        if self.status == "emprestado":
+            self.status = "disponível"
+            return True
+        return False
+
+    def __str__(self):
+        return f"{self.titulo} por {self.autor} - Status: {self.status}"
+
+class App(ctk.CTk):
+    def __init__(self):
+        super().__init__()
+
+        self.title("Biblioteca Escolar - Sistema de Livros")
+        self.geometry("800x700")
+        self.resizable(True, True)
+
+        # Lista de livros
+        self.livros = []
+
+        self.create_widgets()
+
+    def create_widgets(self):
+        
+        title = ctk.CTkLabel(self, text="Gerencie a Biblioteca Escolar", font=ctk.CTkFont(size=20, weight="bold"))
+        title.pack(pady=20)
+
+        frame_add = ctk.CTkFrame(self)
+        frame_add.pack(pady=10, padx=20, fill="x")
+
+        ctk.CTkLabel(frame_add, text="Adicionar Livro:", font=ctk.CTkFont(size=16)).pack(anchor="w", padx=10, pady=5)
+
+        self.entry_titulo = ctk.CTkEntry(frame_add, placeholder_text="Título do Livro")
+        self.entry_titulo.pack(side="left", padx=10, pady=5, fill="x", expand=True)
+
+        
+        self.entry_autor = ctk.CTkEntry(frame_add, placeholder_text="Autor")
+        self.entry_autor.pack(side="left", padx=10, pady=5, fill="x", expand=True)
+
+        # Botão adicionar
+        btn_add = ctk.CTkButton(frame_add, text="Adicionar", command=self.adicionar_livro)
+        btn_add.pack(side="right", padx=10, pady=5)
+
+        
+        frame_actions = ctk.CTkFrame(self)
+        frame_actions.pack(pady=10, padx=20, fill="x")
+
+        ctk.CTkLabel(frame_actions, text="Ações:", font=ctk.CTkFont(size=16)).pack(anchor="w", padx=10, pady=5)
+
+        
+        self.combo_livro = ctk.CTkComboBox(frame_actions, values=[], state="readonly")
+        self.combo_livro.pack(side="left", padx=10, pady=5, fill="x", expand=True)
+
+        
+        btn_emprestar = ctk.CTkButton(frame_actions, text="Emprestar", command=self.emprestar_livro)
+        btn_emprestar.pack(side="left", padx=10, pady=5)
+
+        btn_devolver = ctk.CTkButton(frame_actions, text="Devolver", command=self.devolver_livro)
+        btn_devolver.pack(side="right", padx=10, pady=5)
+
+       
+        self.text_livros = ctk.CTkTextbox(self, height=300)
+        self.text_livros.pack(pady=10, padx=20, fill="both", expand=True)
+
+        
+        self.atualizar_lista()
+
+    def adicionar_livro(self):
+        titulo = self.entry_titulo.get().strip()
+        autor = self.entry_autor.get().strip()
+        if titulo and autor:
+            livro = Livro(titulo, autor)
+            self.livros.append(livro)
+            self.atualizar_lista()
+            self.atualizar_combo()
+            self.entry_titulo.delete(0, "end")
+            self.entry_autor.delete(0, "end")
+            messagebox.showinfo("Sucesso", f"Livro '{titulo}' adicionado!")
+        else:
+            messagebox.showwarning("Aviso", "Preencha título e autor!")
+
+    def emprestar_livro(self):
+        selected = self.combo_livro.get()
+        if selected:
+            for livro in self.livros:
+                if f"{livro.titulo} por {livro.autor}" == selected:
+                    if livro.emprestar():
+                        messagebox.showinfo("Sucesso", f"'{livro.titulo}' emprestado!")
+                    else:
+                        messagebox.showwarning("Aviso", f"'{livro.titulo}' já está emprestado!")
+                    self.atualizar_lista()
+                    self.atualizar_combo()
+                    break
+        else:
+            messagebox.showwarning("Aviso", "Selecione um livro!")
+
+    def devolver_livro(self):
+        selected = self.combo_livro.get()
+        if selected:
+            for livro in self.livros:
+                if f"{livro.titulo} por {livro.autor}" == selected:
+                    if livro.devolver():
+                        messagebox.showinfo("Sucesso", f"'{livro.titulo}' devolvido!")
+                    else:
+                        messagebox.showwarning("Aviso", f"'{livro.titulo}' já está disponível!")
+                    self.atualizar_lista()
+                    self.atualizar_combo()
+                    break
+        else:
+            messagebox.showwarning("Aviso", "Selecione um livro!")
+
+    def atualizar_lista(self):
+        self.text_livros.delete("1.0", "end")
+        if not self.livros:
+            self.text_livros.insert("1.0", "Nenhum livro cadastrado.")
+        else:
+            for i, livro in enumerate(self.livros, 1):
+                self.text_livros.insert("end", f"{i}. {livro}\n")
+
+    def atualizar_combo(self):
+        valores = [f"{livro.titulo} por {livro.autor}" for livro in self.livros]
+        self.combo_livro.configure(values=valores)
+
+if __name__ == "__main__":
+    app = App()
+    app.mainloop()
